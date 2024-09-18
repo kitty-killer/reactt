@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import WorkerAPI from "./api/service";
+import Table from "./Table";
+import { useState } from "react";
+
+
+const initialWorkers = WorkerAPI.all();
+console.log(initialWorkers);
 
 function App() {
+  const [workers, setWorkers] = useState(initialWorkers);
+  const delWork = (id) => {
+    if (WorkerAPI.delete(id)) {
+      setWorkers(workers.filter((worker) => worker.id !== id));
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table workers={workers} delWorker={delWork} />
     </div>
   );
 }
