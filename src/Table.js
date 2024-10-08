@@ -15,15 +15,23 @@ const Table = ({ workers, delWorker, updateWorker }) => {
   const [editingRow, setEditingRow] = useState(null);
   const [editedName, setEditedName] = useState('');
   const [editedJob, setEditedJob] = useState('');
+  const [originalData, setOriginalData] = useState({});
 
   const handleEdit = (worker) => {
     setEditingRow(worker.id);
     setEditedName(worker.name);
     setEditedJob(worker.job);
+    setOriginalData({ name: worker.name, job: worker.job });
   };
 
   const handleSave = (id) => {
     updateWorker(id, editedName, editedJob);
+    setEditingRow(null);
+  };
+
+  const handleCancel = () => {
+    setEditedName(originalData.name);
+    setEditedJob(originalData.job);
     setEditingRow(null);
   };
 
@@ -67,11 +75,22 @@ const Table = ({ workers, delWorker, updateWorker }) => {
               </TableCell>
               <TableCell>
                 {editingRow === worker.id ? (
-                  <Button onClick={() => handleSave(worker.id)}>Save</Button>
+                  <>
+                    <Button onClick={() => handleSave(worker.id)} variant="contained" color="primary">
+                      Save
+                    </Button>
+                    <Button onClick={handleCancel} variant="outlined" color="secondary">
+                      Cancel
+                    </Button>
+                  </>
                 ) : (
                   <>
-                    <Button onClick={() => handleEdit(worker)}>Edit</Button>
-                    <Button onClick={() => delWorker(worker.id)}>Delete</Button>
+                    <Button onClick={() => handleEdit(worker)} variant="contained" color="primary">
+                      Edit
+                    </Button>
+                    <Button onClick={() => delWorker(worker.id)} variant="outlined" color="secondary">
+                      Delete
+                    </Button>
                   </>
                 )}
               </TableCell>
