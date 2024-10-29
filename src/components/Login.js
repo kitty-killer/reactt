@@ -8,6 +8,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Simulated login logic
     if (username === "admin" && password === "password") {
       setIsLoggedIn(true);
       setError(null);
