@@ -4,13 +4,20 @@
     // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "Launch Edge",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}"
+        },
         
 
         {
             "type": "chrome",
             "request": "launch",
             "name": "Запустить Chrome на localhost",
-            "url": "http://localhost:8080",
+            "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}"
         }
     ]

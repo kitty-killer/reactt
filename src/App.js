@@ -1,51 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import WorkerAPI from "./api/service";
+import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import Home from "./components/Home";
 import Registration from "./components/Registration";
 import Login from "./components/Login";
-
-const initialWorkers = WorkerAPI.all();
+import { deleteWorker } from './redux/actions';
 
 function App() {
-  useEffect(() => {
-    console.log("App component rendered");
-  }, []);
-
-  const [workers, setWorkers] = useState(initialWorkers);
+  const workers = useSelector((state) => state.workers);
   const [view, setView] = useState("table");
+  const dispatch = useDispatch();
 
   const delWorker = (id) => {
-    if (WorkerAPI.delete(id)) {
-      setWorkers(workers.filter((worker) => worker.id !== id));
-    }
+    dispatch(deleteWorker(id));
   };
 
   const addWorker = (worker) => {
-    WorkerAPI.add(worker);
-    setWorkers([...workers, worker]);
+    dispatch(addWorker(worker));
   };
 
-  const updateWorker = (id, name, job) => {
-    WorkerAPI.update({ id, name, job });
-    setWorkers(workers.map(w => w.id === id ? { id, name, job } : w));
+  const updateWorker = (worker) => {
+    dispatch(updateWorker(worker));
   };
 
   return (
-    <Router>
-      <div className="App">
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/registration">Register</Link>
-          <Link to="/login">Login</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} />} />
-          <Route path="/registration" element={<Registration addWorker={addWorker} />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/registration">Register</Link>
+        <Link to="/login">Login</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} />} />
+        <Route path="/registration" element={<Registration addWorker={addWorker} />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>
   );
 }
 
