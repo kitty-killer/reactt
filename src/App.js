@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import WorkerAPI from "./api/service";
-import Table from "./Table";
-import Cards from "./Cards";
-import Form from "./Form";
-import { Button } from "@mui/material";
+import Home from "./components/Home";
+import Registration from "./components/Registration";
+import Login from "./components/Login";
 
 const initialWorkers = WorkerAPI.all();
 
 function App() {
+  useEffect(() => {
+    console.log("App component rendered");
+  }, []);
+
   const [workers, setWorkers] = useState(initialWorkers);
   const [view, setView] = useState("table");
 
@@ -28,17 +32,20 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Form addWorker={addWorker} />
-      <Button onClick={() => setView(view === "table" ? "cards" : "table")}>
-        Switch to {view === "table" ? "Cards" : "Table"} View
-      </Button>
-      {view === "table" ? (
-        <Table workers={workers} delWorker={delWorker} updateWorker={updateWorker} />
-      ) : (
-        <Cards workers={workers} delWorker={delWorker} updateWorker={updateWorker} />
-      )}
-    </div>
+    <Router>
+      <div className="App">
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/registration">Register</Link>
+          <Link to="/login">Login</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} />} />
+          <Route path="/registration" element={<Registration addWorker={addWorker} />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
