@@ -1,4 +1,5 @@
-import { ADD_WORKER, DELETE_WORKER, UPDATE_WORKER } from './actions';
+// src/workerReducer.js
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [
   { id: 1, name: "Ben Blocker", job: "Teacher" },
@@ -9,17 +10,24 @@ const initialState = [
   { id: 6, name: "Fillipe Forward", job: "Rector" },
 ];
 
-export const workerReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_WORKER:
-      return [...state, action.payload];
-    case DELETE_WORKER:
+const workerSlice = createSlice({
+  name: 'workers',
+  initialState,
+  reducers: {
+    addWorker: (state, action) => {
+      state.push(action.payload);
+    },
+    deleteWorker: (state, action) => {
       return state.filter(worker => worker.id !== action.payload);
-    case UPDATE_WORKER:
-      return state.map(worker =>
-        worker.id === action.payload.id ? action.payload : worker
-      );
-    default:
-      return state;
-  }
-};
+    },
+    updateWorker: (state, action) => {
+      const index = state.findIndex(worker => worker.id === action.payload.id);
+      if (index !== -1) {
+        state[index] = action.payload;
+      }
+    },
+  },
+});
+
+export const { addWorker, deleteWorker, updateWorker } = workerSlice.actions;
+export default workerSlice.reducer;

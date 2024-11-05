@@ -1,10 +1,12 @@
+// src/App.js
 import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import Home from "./components/Home";
 import Registration from "./components/Registration";
 import Login from "./components/Login";
-import { deleteWorker } from './redux/actions';
+import { addWorker, deleteWorker, updateWorker } from './workerReducer';
+import { Button, Box } from "@mui/material";
 
 function App() {
   const workers = useSelector((state) => state.workers);
@@ -25,13 +27,19 @@ function App() {
 
   return (
     <div className="App">
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/registration">Register</Link>
-        <Link to="/login">Login</Link>
-      </nav>
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <Button component={Link} to="/" variant="contained" color="primary">
+          Home
+        </Button>
+        <Button component={Link} to="/registration" variant="contained" color="secondary">
+          Register
+        </Button>
+        <Button component={Link} to="/login" variant="contained" color="success">
+          Login
+        </Button>
+      </Box>
       <Routes>
-        <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} />} />
+        <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} addWorker={addWorker} />} />
         <Route path="/registration" element={<Registration addWorker={addWorker} />} />
         <Route path="/login" element={<Login />} />
       </Routes>
