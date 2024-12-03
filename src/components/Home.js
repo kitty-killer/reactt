@@ -1,25 +1,35 @@
-// src/components/Home.js
-import React from "react";
-import Table from "./Table";
-import Cards from "./Cards";
-import Registration from "./Registration";
-import { Button } from "@mui/material";
+import React from 'react';
+import { Button, Box, Typography } from '@mui/material';
+import Cards from './Cards';
+import Table from './Table';  
 
-const Home = ({ view, setView, workers, delWorker, updateWorker, addWorker }) => {
+const Home = ({ workers, delWorker, updateWorker, view, setView, isLoggedIn }) => {
+  if (!isLoggedIn) {
+    return (
+      <div>
+        <Typography variant="h4" color="error">
+          Access Denied! Please log in to view this page.
+        </Typography>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <Button onClick={() => setView(view === "table" ? "cards" : "table")}>
-        Switch to {view === "table" ? "Cards" : "Table"} View
-      </Button>
-      <Button onClick={() => setView(view === "register" ? "table" : "register")}>
-        {view === "register" ? "Back to Table" : "Register Worker"}
-      </Button>
+      <h1>Home</h1>
+      <Box sx={{ mb: 2 }}>
+        <Button onClick={() => setView("table")} variant="contained" color="primary">
+          View Table
+        </Button>
+        <Button onClick={() => setView("cards")} variant="contained" color="secondary">
+          View Cards
+        </Button>
+      </Box>
+
       {view === "table" ? (
         <Table workers={workers} delWorker={delWorker} updateWorker={updateWorker} />
-      ) : view === "cards" ? (
-        <Cards workers={workers} delWorker={delWorker} updateWorker={updateWorker} />
       ) : (
-        <Registration addWorker={addWorker} />
+        <Cards workers={workers} delWorker={delWorker} updateWorker={updateWorker} />
       )}
     </div>
   );

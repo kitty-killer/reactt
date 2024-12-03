@@ -1,26 +1,22 @@
-// src/components/Login.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulated login logic
+    
     if (username === "admin" && password === "password") {
-      setIsLoggedIn(true);
       setError(null);
-      console.log("Logged in successfully with:", username);
-      navigate('/'); // Redirect to home page
+      handleLogin();  
+      navigate('/'); 
     } else {
       setError("Invalid username or password");
-      setIsLoggedIn(false);
     }
   };
 
@@ -38,7 +34,6 @@ const Login = () => {
               fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              required
             />
           </Box>
           <Box sx={{ mb: 2 }}>
@@ -49,7 +44,6 @@ const Login = () => {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </Box>
           {error && <Typography color="error">{error}</Typography>}
@@ -57,11 +51,6 @@ const Login = () => {
             Login
           </Button>
         </form>
-        {isLoggedIn && (
-          <Typography variant="h6" color="success.main" sx={{ mt: 2 }}>
-            Welcome, {username}!
-          </Typography>
-        )}
       </Box>
     </Container>
   );

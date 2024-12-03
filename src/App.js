@@ -1,28 +1,34 @@
-// src/App.js
-import React, { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+
+import React, { useState } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import Home from "./components/Home";
-import Registration from "./components/Registration";
-import Login from "./components/Login";
-import { addWorker, deleteWorker, updateWorker } from './workerReducer';
-import { Button, Box } from "@mui/material";
+import Home from './components/Home';
+import Registration from './components/Registration';
+import Login from './components/Login';
+import { addWorker, deleteWorker, updateWorker } from './redux/workerReducer';
+import { Button, Box } from '@mui/material';
 
 function App() {
   const workers = useSelector((state) => state.workers);
-  const [view, setView] = useState("table");
   const dispatch = useDispatch();
+
+  const [view, setView] = useState("table");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const delWorker = (id) => {
     dispatch(deleteWorker(id));
   };
 
-  const addWorker = (worker) => {
+  const addWorkerToState = (worker) => {
     dispatch(addWorker(worker));
   };
 
-  const updateWorker = (worker) => {
+  const updateWorkerInState = (worker) => {
     dispatch(updateWorker(worker));
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true); // Состояние логина при успешном входе
   };
 
   return (
@@ -39,9 +45,12 @@ function App() {
         </Button>
       </Box>
       <Routes>
-        <Route path="/" element={<Home view={view} setView={setView} workers={workers} delWorker={delWorker} updateWorker={updateWorker} addWorker={addWorker} />} />
-        <Route path="/registration" element={<Registration addWorker={addWorker} />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={<Home workers={workers} delWorker={delWorker} updateWorker={updateWorkerInState} view={view} setView={setView} isLoggedIn={isLoggedIn} />}
+        />
+        <Route path="/registration" element={<Registration addWorker={addWorkerToState} />} />
+        <Route path="/login" element={<Login handleLogin={handleLogin} />} />
       </Routes>
     </div>
   );

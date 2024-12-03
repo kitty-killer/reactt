@@ -13,7 +13,7 @@ const Cards = ({ workers, delWorker, updateWorker }) => {
   };
 
   const handleSave = (id) => {
-    updateWorker(id, editedName, editedJob);
+    updateWorker({ id, name: editedName, job: editedJob });
     setEditingCard(null);
   };
 

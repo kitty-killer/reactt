@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 
-function Form({ addWorker }) {
+const Form = ({ addWorker }) => {
   const [name, setName] = useState('');
   const [job, setJob] = useState('');
 
@@ -43,6 +43,6 @@ function Form({ addWorker }) {
       </Button>
     </Box>
   );
-}
+};
 
 export default Form;
