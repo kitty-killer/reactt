@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
+
 const Login = ({ handleLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (username === "admin" && password === "password") {
-      setError(null);
-      handleLogin();  
-      navigate('/'); 
+   
+    if (username === 'admin' && password === 'password') {
+      handleLogin(true); 
     } else {
-      setError("Invalid username or password");
+      handleLogin(false); 
     }
   };
 
@@ -33,6 +29,7 @@ const Login = ({ handleLogin }) => {
               fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </Box>
           <Box sx={{ mb: 2 }}>
@@ -43,9 +40,9 @@ const Login = ({ handleLogin }) => {
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </Box>
-          {error && <Typography color="error">{error}</Typography>}
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Login
           </Button>
