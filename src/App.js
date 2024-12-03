@@ -1,51 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 import Home from './components/Home';
 import Registration from './components/Registration';
 import Login from './components/Login';
-import { addWorker, deleteWorker, updateWorker } from './redux/workerReducer';
 import { Button, Box, Typography, CircularProgress } from '@mui/material';
 
 function App() {
-  const workers = useSelector((state) => state.workers);
-  const dispatch = useDispatch();
-
+  const [workers, setWorkers] = useState([]);
   const [view, setView] = useState("table");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(false); // Для анимации загрузки
-  const [loginStatus, setLoginStatus] = useState(null); // Статус входа: true, false, null
+  const [loading, setLoading] = useState(false);
+  const [loginStatus, setLoginStatus] = useState(null);
 
   const navigate = useNavigate();
 
-  const delWorker = (id) => {
-    dispatch(deleteWorker(id));
+  // Загрузка сотрудников с сервера
+  useEffect(() => {
+    if (isLoggedIn) {
+      axios
+        .get('http://localhost:8080/api/workers')
+        .then((response) => setWorkers(response.data))
+        .catch((error) => console.error('Error fetching workers:', error));
+    }
+  }, [isLoggedIn]);
+
+  const handleLogin = (username, password) => {
+    setLoading(true);
+    axios
+      .post('http://localhost:8080/api/auth/login', { username, password })
+      .then(() => {
+        setLoginStatus(true);
+        setTimeout(() => {
+          setLoading(false);
+          setIsLoggedIn(true);
+          navigate('/');
+        }, 7000);
+      })
+      .catch(() => {
+        setLoginStatus(false);
+        setLoading(false);
+      });
   };
 
   const addWorkerToState = (worker) => {
-    dispatch(addWorker(worker));
+    axios
+      .post('http://localhost:8080/api/workers', worker)
+      .then((response) => setWorkers((prev) => [...prev, response.data]))
+      .catch((error) => console.error('Error adding worker:', error));
+  };
+
+  const delWorker = (id) => {
+    axios
+      .delete(`http://localhost:8080/api/workers/${id}`)
+      .then(() => setWorkers((prev) => prev.filter((worker) => worker.id !== id)))
+      .catch((error) => console.error('Error deleting worker:', error));
   };
 
   const updateWorkerInState = (worker) => {
-    dispatch(updateWorker(worker));
-  };
-
-  const handleLogin = (success) => {
-    setLoading(true); 
-    setLoginStatus(success); 
-    setTimeout(() => {
-      setLoading(false); 
-      if (success) {
-        setIsLoggedIn(true); 
-        navigate('/');
-      }
-    }, 4000); 
+    axios
+      .put(`http://localhost:8080/api/workers/${worker.id}`, worker)
+      .then((response) =>
+        setWorkers((prev) =>
+          prev.map((w) => (w.id === response.data.id ? response.data : w))
+        )
+      )
+      .catch((error) => console.error('Error updating worker:', error));
   };
 
   const handleLogout = () => {
-    setIsLoggedIn(false); 
+    setIsLoggedIn(false);
     setView("table");
-    navigate('/login'); 
+    navigate('/login');
   };
 
   return (
@@ -70,7 +96,6 @@ function App() {
         )}
       </Box>
 
-      {/* Анимация статуса входа */}
       {loading && (
         <Box
           sx={{
@@ -81,18 +106,17 @@ function App() {
             mb: 2,
           }}
         >
-          {loginStatus ? (
+          {loginStatus === true ? (
             <Typography variant="h6" color="success.main">
               Successfully logged in!
             </Typography>
-          ) : (
+          ) : loginStatus === false ? (
             <Box>
-              <Typography variant="h6" color="error" gutterBottom>
+              <Typography variant="h6" color="error">
                 эмм...  у тебя,кажется лапки,повтори..😑
               </Typography>
               <img
                 src="https://yt3.googleusercontent.com/eSIZKBl1sKImaTEqCpGY9ylf47AtkNZuOWFGTCMiOuL0O_IjJEEo9hMwLkvhTVwnxax6wFkfiw=s900-c-k-c0x00ffffff-no-rj"
-                 //Супер крутая картинка кота,если ввели неправильный пароль или логин
                 alt="Error"
                 style={{
                   width: '150px',
@@ -102,7 +126,7 @@ function App() {
                 }}
               />
             </Box>
-          )}
+          ) : null}
           <CircularProgress sx={{ ml: 2 }} />
         </Box>
       )}
@@ -127,7 +151,7 @@ function App() {
         />
         <Route
           path="/login"
-          element={<Login handleLogin={(status) => handleLogin(status)} />}
+          element={<Login handleLogin={(username, password) => handleLogin(username, password)} />}
         />
       </Routes>
     </div>
