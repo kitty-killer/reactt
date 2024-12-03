@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, Typography, Button, Grid, TextField } from "@mui/material";
+
 const Cards = ({ workers, delWorker, updateWorker }) => {
   const [editingCard, setEditingCard] = useState(null);
   const [editedName, setEditedName] = useState('');
@@ -14,6 +15,12 @@ const Cards = ({ workers, delWorker, updateWorker }) => {
   const handleSave = (id) => {
     updateWorker({ id, name: editedName, job: editedJob });
     setEditingCard(null);
+  };
+
+  const handleCancel = () => {
+    setEditingCard(null);
+    setEditedName('');
+    setEditedJob('');
   };
 
   return (
@@ -41,7 +48,7 @@ const Cards = ({ workers, delWorker, updateWorker }) => {
                   <Button onClick={() => handleSave(worker.id)} variant="contained" color="primary">
                     Save
                   </Button>
-                  <Button onClick={() => setEditingCard(null)} variant="outlined" color="secondary">
+                  <Button onClick={handleCancel} variant="outlined" color="secondary">
                     Cancel
                   </Button>
                 </>
