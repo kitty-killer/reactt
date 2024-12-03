@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-
 const Form = ({ addWorker }) => {
   const [name, setName] = useState('');
   const [job, setJob] = useState('');

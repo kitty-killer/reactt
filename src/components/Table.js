@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
-
 const TableComponent = ({ workers, delWorker, updateWorker }) => {
   return (
     <TableContainer component={Paper}>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, Paper } from "@mui/material";
 import Form from "./Form";
-
 const Registration = ({ addWorker, authenticated }) => {
   
   if (!authenticated) {

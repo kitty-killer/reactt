@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Box, Typography } from '@mui/material';
 import Cards from './Cards';
 import Table from './Table';  
-
 const Home = ({ workers, delWorker, updateWorker, view, setView, isLoggedIn }) => {
   if (!isLoggedIn) {
     return (

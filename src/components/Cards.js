@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, CardContent, Typography, Button, Grid, TextField } from "@mui/material";
-
 const Cards = ({ workers, delWorker, updateWorker }) => {
   const [editingCard, setEditingCard] = useState(null);
   const [editedName, setEditedName] = useState('');

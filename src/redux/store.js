@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import workerReducer from './workerReducer';
-
 const store = configureStore({
   reducer: {
     workers: workerReducer,

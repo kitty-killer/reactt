@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,7 +6,6 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import { addWorker, deleteWorker, updateWorker } from './redux/workerReducer';
 import { Button, Box } from '@mui/material';
-
 function App() {
   const workers = useSelector((state) => state.workers);
   const dispatch = useDispatch();
