@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import workerReducer from './workerReducer';
+import rootReducer from "../reducers/rootReducer";
+
 const store = configureStore({
-  reducer: {
-    workers: workerReducer,
-  },
-  devTools: process.env.NODE_ENV !== 'production',
+    reducer: rootReducer,
 });
 
 export default store;
