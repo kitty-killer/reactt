@@ -1,0 +1,102 @@
+
+.footer {
+  background-color: #212121;
+  color: #ffffff;
+  padding: 1rem 1rem;
+  text-align: center;
+  border-top: 1px solid #444444;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__logo {
+    text-align: center;
+
+    h1 {
+      font-size: 2rem;
+      color: #ffbf00;
+    }
+  }
+
+  &__easter-egg {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #b0b0b0;
+
+    @media (min-width: 768px) {
+      margin-top: 0;
+    }
+  }
+
+  &__nav {
+    margin-top: 1rem;
+
+    @media (min-width: 768px) {
+      margin-top: 0;
+    }
+
+    ul {
+      display: flex;
+      gap: 1.5rem;
+
+      li {
+        list-style: none;
+
+        a {
+          color: #ffffff;
+          text-decoration: none;
+          transition: color 0.3s;
+
+          &:hover {
+            color: #ffbf00;
+          }
+        }
+      }
+    }
+  }
+
+  &__social {
+    margin-top: 1rem;
+
+    @media (min-width: 768px) {
+      margin-top: 0;
+    }
+
+    a {
+      color: #ffffff;
+      margin: 0 0.5rem;
+      text-decoration: none;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #ffbf00;
+      }
+    }
+  }
+
+  &__bottom {
+    margin-top: 1rem;
+    border-top: 1px solid #444444;
+    padding-top: 1rem;
+    text-align: center;
+
+    p {
+      margin: 0;
+      color: #8a8a8a;
+
+      &:last-child {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}

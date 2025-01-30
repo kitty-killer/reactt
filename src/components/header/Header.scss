@@ -1,0 +1,97 @@
+$header-bg: #f8f8f8;
+$header-shadow: rgba(0, 0, 0, 0.1);
+$primary-color: #007bff;
+$secondary-color: #28a745;
+$hover-primary: #0056b3;
+$hover-secondary: #218838;
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: $header-bg;
+    box-shadow: 0 2px 4px $header-shadow;
+
+    .logo {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 50px; 
+            height: 50px; 
+            margin-right: 10px;
+        }
+    }
+
+    .nav {
+        ul {
+            list-style: none;
+            display: flex;
+            gap: 20px; 
+            margin: 0;
+            padding: 0;
+
+            a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+
+                &:hover {
+                    color: #ff6347; 
+                }
+            }
+        }
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 10px; 
+
+        .login-button,
+        .register-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-button {
+            background-color: $primary-color;
+            color: white;
+
+            &:hover {
+                background-color: $hover-primary; 
+            }
+        }
+
+        .register-button {
+            background-color: $secondary-color; 
+            color: white;
+
+            &:hover {
+                background-color: $hover-secondary; 
+            }
+        }
+    }
+    .clicker-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: 20px;
+      }
+      
+      .clicker-button {
+        background-color: #6d4c41;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      .clicker-button:hover {
+        background-color: #8d6e63;
+      }
+}

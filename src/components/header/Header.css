@@ -1,0 +1,75 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.header .logo {
+  display: flex;
+  align-items: center;
+}
+.header .logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+.header .nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+.header .nav ul a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+.header .nav ul a:hover {
+  color: #ff6347;
+}
+.header .auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+.header .auth-buttons .login-button,
+.header .auth-buttons .register-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.header .auth-buttons .login-button {
+  background-color: #007bff;
+  color: white;
+}
+.header .auth-buttons .login-button:hover {
+  background-color: #0056b3;
+}
+.header .auth-buttons .register-button {
+  background-color: #28a745;
+  color: white;
+}
+.header .auth-buttons .register-button:hover {
+  background-color: #218838;
+}
+.header .clicker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+}
+.header .clicker-button {
+  background-color: #6d4c41;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.header .clicker-button:hover {
+  background-color: #8d6e63;
+}/*# sourceMappingURL=Header.css.map */
